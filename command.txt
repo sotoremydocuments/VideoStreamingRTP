@@ -1,0 +1,14 @@
+This source code implements priority frame sending algorithm.
+1) We first order I,B,P frames in order of priority by the following commands (using FFMPEG software)
+
+ffmpeg -i test.mp4 -vcodec mpeg2video -pix_fmt yuv420p -me_method epzs -threads 4 -r 29.97 -g 15 -s 704x396 -b 2500k -bt 300k -acodec mp2 -ac 2 -ab 192k -ar 44100 -async 1 -y -f vob output.mpg
+
+ffmpeg -i test.mp4 -vcodec mpeg2video -pix_fmt yuv420p -me_method epzs -threads 4 -r 29.97 -g 45 -bf 2 -trellis 2 -cmp 2 -subcmp 2 -s 704x396 -b 2500k -bt 300k -acodec mp2 -ac 2 -ab 192k -ar 44100 -async 1 -y -f vob output.mpg
+
+2) We then copy the output.mpg file into VideoStreamingRTP folder to stream the video file.
+    Run server by the following command:    java Server 6000
+    Run client by the following command:    java Client server_ip_address 6000 output.mpg
+
+
+
+https://inst.eecs.berkeley.edu/~ee122/sp06/ProgAsgns/pa3.html
